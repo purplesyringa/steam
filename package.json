@@ -1,0 +1,11 @@
+{
+  "name": "steam",
+  "version": "1.0.0",
+  "description": "A reactive library",
+  "main": "steam.js",
+  "scripts": {
+    "build": "uglifyjs -cm --mangle-props keep_quoted -o steam.min.js steam.js"
+  },
+  "author": "purplesyringa",
+  "license": "ISC"
+}
