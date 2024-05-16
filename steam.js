@@ -151,6 +151,14 @@ const Steam = (strings, ...args) => {
 			return;
 		}
 
+		if (name === "dangerously-set-inner-html") {
+			if (node.childNodes.length > 0) {
+				throw new Error(`dangerouslySetInnerHtml prop should not be present if the node already contains data`);
+			}
+			node.innerHTML = value.__html;
+			return;
+		}
+
 		if (name === "value") {
 			node.value = value;
 			return;
