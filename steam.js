@@ -22,7 +22,7 @@ let currentComponentInstance = null;
 
 const Steam = (strings, ...args) => {
 	if (!currentComponentInstance) {
-		throw new Error("Steam`` can only be used in a reactive constant, e.g. in Steam.attach");
+		throw new Error("Steam`` can only be used in a reactive context, e.g. in Steam.attach");
 	}
 
 	let precompiled = templateCache.get(strings);
