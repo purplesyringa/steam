@@ -493,32 +493,40 @@ const styleNode = document.createElement("style");
 document.head.append(styleNode);
 const cssCache = new Map();
 
-Steam["styled"] = componentFn => (...args) => {
-	const cssFn = Steam["css"](...args);
+Steam["styled"] = new Proxy(
+	componentFn => (...args) => {
+		const cssFn = Steam["css"](...args);
 
-	return props => {
-		const css = cssFn(props);
-		let className = cssCache.get(css);
-		if (!className) {
-			className = `steam-${cssCache.size}`;
-			styleNode.sheet.insertRule(`.${className}{${css}}`);
-			cssCache.set(css, className);
-		}
+		return props => {
+			const css = cssFn(props);
+			let className = cssCache.get(css);
+			if (!className) {
+				className = `steam-${cssCache.size}`;
+				styleNode.sheet.insertRule(`.${className}{${css}}`);
+				cssCache.set(css, className);
+			}
 
-		props = { ...props };
-		if (!props["class"]) {
-			props["class"] = className;
-		} else if (Array.isArray(props["class"])) {
-			props["class"] = [ className, ...props["class"] ];
-		} else if (typeof props["class"] === "object") {
-			props["class"] = { [className]: true, ...props["class"] };
-		} else {
-			props["class"] += ` ${className}`;
-		}
-		Object.freeze(props);
-		return componentFn(props);
-	};
-};
+			props = { ...props };
+			if (!props["class"]) {
+				props["class"] = className;
+			} else if (Array.isArray(props["class"])) {
+				props["class"] = [ className, ...props["class"] ];
+			} else if (typeof props["class"] === "object") {
+				props["class"] = { [className]: true, ...props["class"] };
+			} else {
+				props["class"] += ` ${className}`;
+			}
+			Object.freeze(props);
+			return componentFn(props);
+		};
+	},
+	{
+		get(styled, name) {
+			const strings = [`<${name} `, `></${name}>`];
+			return styled(props => Steam(strings, props));
+		},
+	},
+);
 
 const newComponentInstance = (componentFn, props) => ({
 	componentFn,

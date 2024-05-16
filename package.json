@@ -4,7 +4,7 @@
   "description": "A reactive library",
   "main": "steam.js",
   "scripts": {
-    "build": "uglifyjs -cm --mangle-props keep_quoted -o steam.min.js steam.js"
+    "build": "uglifyjs -cm --mangle-props keep_quoted -o lib/steam.min.js steam.js"
   },
   "author": "purplesyringa",
   "license": "ISC"
