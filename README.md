@@ -113,3 +113,24 @@ function EnhancedClicker() {
 }
 Steam.attach(document.body, EnhancedClicker);
 ```
+
+Handle lists:
+
+```javascript
+function List({ items }) {
+	return Steam`
+		<ul>
+			${items.map(item => Steam`<li>${item}</li>`)}
+		</ul>
+	`;
+}
+Steam.attach(document.body, () => Steam`
+	<${List} items=${[1, 2, 3]}></>
+`);
+```
+
+Caveats:
+
+- Kebab-case attribute names in template strings are mapped to camelCase prop names: `<${Component} hello-world=${123}></>` is visible as prop `helloWorld` in the component.
+- Event handlers are all lowercase.
+- Use `dangerously-set-inner-html=${{__html: ...}}` to set innerHTML directly. This maps to prop name `dangerouslySetInnerHtml`, not `dangerouslySetInnerHTML`.
