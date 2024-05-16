@@ -2,7 +2,7 @@
 
 Steam is React, minus the bullshit.
 
-It's a 3 KB library that enables you to use React-like environment without a build system or large dependencies like this:
+It's a 3 KB library (gzipped) that enables you to use React-like environment without a build system or large dependencies like this:
 
 ```html
 <!DOCTYPE html>
